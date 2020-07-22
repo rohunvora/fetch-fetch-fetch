@@ -1,33 +1,74 @@
-const container = document.querySelector('.container');
+const body = document.querySelector('body');
 
-
-fetch('https://api.spacexdata.com/v3/capsules')
+fetch('https://pokeapi.co/api/v2/pokemon/mewtwo')
 .then(response => {
-  console.log(response)
   return response.json();
 })
 .then(data => {
-  // const firstElement = data[0];
-  // let capsuleID = firstElement.capsule_id;
-  // console.log(capsuleID);
-  // let details = firstElement.details;
-  // console.log(details);
-  // let landings = firstElement.landings;
-  // console.log(landings)
+  console.log(data);
+  let profilePic = data.sprites.front_default;
+  let pokeName = data.name;
+  let height = data.height;
+  let weight = data.weight
+  let solarBeam = data.moves[23].move.name;
+  let type = data.types[0].type.name;
 
-  for (let i = 0; i < data.length; i++) {
-    let eachCapsule = data[i];
-    // console.log(eachCapsule);
-    const obj = {
-      capsuleID: eachCapsule.capsule_id,
-      details: eachCapsule.details,
-      landings: eachCapsule.landings
-    }
+  const card = document.createElement('div');
+  card.classList.add('card');
+  card.style.width = '18rem';
+  console.log(card);
 
-    console.log(obj);
+  const image = document.createElement('img');
+  image.src = profilePic;
+  image.classList.add('card-img-top');
+  image.alt = 'mewtwo'
 
-    const capsuleElement = document.createElement('p');
-    capsuleElement.textContent = obj.capsuleID;
-    container.appendChild(capsuleElement);
-  }
+  const cardBody = document.createElement('div');
+  cardBody.classList.add('card-body');
+  console.log(cardBody);
+
+  let firstLetter = pokeName.charAt(0).toUpperCase();
+  let otherLetters = pokeName.slice(1);
+  let finalName = firstLetter + otherLetters;
+
+  const cardTitle = document.createElement('h5');
+  cardTitle.classList.add('card-title');
+  cardTitle.textContent = finalName;
+  console.log(cardTitle);
+
+  const cardWeight = document.createElement('p');
+  const cardHeight = document.createElement('p');
+  const cardMove = document.createElement('p');
+  const cardType = document.createElement('p');
+
+  cardWeight.classList.add('card-text');
+  cardHeight.classList.add('card-text');
+  cardMove.classList.add('card-text');
+  cardType.classList.add('card-text');
+
+  cardWeight.textContent = "Weight: " + weight;
+  cardHeight.textContent = "Height: " + height;
+  cardMove.textContent = "Move: " + solarBeam;
+  cardType.textContent = "Type: " + type;
+
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(cardWeight);
+  cardBody.appendChild(cardHeight);
+  cardBody.appendChild(cardMove);
+  cardBody.appendChild(cardType);
+
+  card.appendChild(image);
+  card.appendChild(cardBody);
+  body.appendChild(card);
+
+
 });
+
+// {/* <div class="card" style="width: 18rem;">
+//   <img src="..." class="card-img-top" alt="...">
+//     <div class="card-body">
+//       <h5 class="card-title">Card title</h5>
+//       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+//       <a href="#" class="btn btn-primary">Go somewhere</a>
+//     </div>
+// </div> */}
